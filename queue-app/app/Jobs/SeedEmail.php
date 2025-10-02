@@ -13,8 +13,8 @@ use Illuminate\Support\Facades\Mail;
 class SeedEmail implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-    public $tries = 10;
-    public $maxExceptions = 2;
+    // public $tries = 2;
+    // public $maxExceptions = 2;
 
     // public $backoff = [2,10,30,40];
     public function __construct()
@@ -29,10 +29,15 @@ class SeedEmail implements ShouldQueue
      */
     public function handle()
     {
-        throw new \Exception('Seed email failed');
-        // sleep(1);
-        return $this->release();
+        // throw new \Exception('Seed email failed');
+        sleep(1);
+        // return $this->release();
         info('Seed email sent!');
 
+    }
+    // public
+    function failed(\Throwable $exception)
+    {
+        info('Seed email job failed after max attempts. Exception: ' . $exception->getMessage());
     }
 }

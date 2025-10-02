@@ -24,6 +24,13 @@ Route::get('/', function () {
 
     // \App\Jobs\SendWelcomeEmail::dispatch();
     // \App\Jobs\ProcessPayment::dispatch()->onQueue('payments');
-    \App\Jobs\SeedEmail::dispatch();
+    // \App\Jobs\SeedEmail::dispatch();
+    $chain = [
+        new \App\Jobs\SendWelcomeEmail(),
+        new \App\Jobs\SeedEmail(),
+        new \App\Jobs\ProcessPayment(),
+
+    ];
+    \Illuminate\Support\Facades\Bus::chain($chain)->dispatch();
     return view('welcome');
 });
