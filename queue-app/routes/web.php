@@ -14,6 +14,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    \App\Jobs\SendWelcomeEmail::dispatch();
+    foreach (range(1, 100) as $i) {
+        echo $i . ' ';
+        \App\Jobs\SendWelcomeEmail::dispatch();
+    }
+    //
+    // \App\Jobs\SendWelcomeEmail::dispatch();
     return view('welcome');
 });
