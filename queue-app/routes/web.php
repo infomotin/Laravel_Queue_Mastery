@@ -23,7 +23,7 @@ Route::get('/', function () {
     //     \App\Jobs\SendWelcomeEmail::dispatch();
     // }
 
-    // \App\Jobs\SendWelcomeEmail::dispatch();
+    \App\Jobs\Deploy::dispatch();
     // \App\Jobs\ProcessPayment::dispatch()->onQueue('payments');
     // \App\Jobs\SeedEmail::dispatch();
     // $batch = [
@@ -63,32 +63,32 @@ Route::get('/', function () {
     //     // })
     //     ->dispatch();
 
-    Bus::chain([
-        new \App\Jobs\ProcessPayment(),
-        // new \App\Jobs\SeedEmail(),
-        // new \App\Jobs\SendWelcomeEmail(),
-        function () {
-            Bus::batch([
-                new \App\Jobs\SeedEmail(),
-                new \App\Jobs\SendWelcomeEmail(),
-            ])->then(function (\Illuminate\Bus\Batch $batch) {
-                // All jobs completed successfully...
-                info('All jobs completed successfully...');
-            })->catch(function (\Illuminate\Bus\Batch $batch, \Throwable $e) {
-                // First batch job failure detected...
-                info('First batch job failure detected...');
-            })->finally(function (\Illuminate\Bus\Batch $batch) {
-                // The batch has finished executing...
-                info('The batch has finished executing...');
-            })->allowFailures(true)->dispatch();
-        },
-        function () {
-            Bus::batch([
-                new \App\Jobs\ProcessPayment(),
-                new \App\Jobs\SendWelcomeEmail(),
-            ])->dispatch();
-        }
-    ]);
+    // Bus::chain([
+    //     new \App\Jobs\ProcessPayment(),
+    //     // new \App\Jobs\SeedEmail(),
+    //     // new \App\Jobs\SendWelcomeEmail(),
+    //     function () {
+    //         Bus::batch([
+    //             new \App\Jobs\SeedEmail(),
+    //             new \App\Jobs\SendWelcomeEmail(),
+    //         ])->then(function (\Illuminate\Bus\Batch $batch) {
+    //             // All jobs completed successfully...
+    //             info('All jobs completed successfully...');
+    //         })->catch(function (\Illuminate\Bus\Batch $batch, \Throwable $e) {
+    //             // First batch job failure detected...
+    //             info('First batch job failure detected...');
+    //         })->finally(function (\Illuminate\Bus\Batch $batch) {
+    //             // The batch has finished executing...
+    //             info('The batch has finished executing...');
+    //         })->allowFailures(true)->dispatch();
+    //     },
+    //     function () {
+    //         Bus::batch([
+    //             new \App\Jobs\ProcessPayment(),
+    //             new \App\Jobs\SendWelcomeEmail(),
+    //         ])->dispatch();
+    //     }
+    // ]);
 
 
     return view('welcome');
