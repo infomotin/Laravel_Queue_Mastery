@@ -13,15 +13,13 @@ use Illuminate\Support\Facades\Mail;
 class SeedEmail implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-    public $email;
-    /**
-     * Create a new job instance.
-     *
-     * @return void
-     */
-    public function __construct($email)
+    public $tries = 10;
+    public $maxExceptions = 2;
+
+    // public $backoff = [2,10,30,40];
+    public function __construct()
     {
-        $this->email = $email;
+
     }
 
     /**
@@ -31,13 +29,10 @@ class SeedEmail implements ShouldQueue
      */
     public function handle()
     {
-        sleep(3);
-        // Simulate saving email to database
-        Mail::raw('plain text message', function ($message) {
-            $message->to($this->email)
-                    ->subject('Welcome to Our Service');
-                    \Log::info('Email sent to: ' . $this->email);
+        throw new \Exception('Seed email failed');
+        // sleep(1);
+        return $this->release();
+        info('Seed email sent!');
 
-        });
     }
 }
