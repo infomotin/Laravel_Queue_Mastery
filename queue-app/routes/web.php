@@ -17,12 +17,12 @@ use App\Http\Controllers\EmailController;
 */
 
 Route::get('/', function () {
-    // foreach (range(1, 100) as $i) {
-    //     echo $i . ' ';
-    //     \App\Jobs\SendWelcomeEmail::dispatch();
-    // }
+    foreach (range(1, 100) as $i) {
+        echo $i . ' ';
+        \App\Jobs\SendWelcomeEmail::dispatch();
+    }
     //
     // \App\Jobs\SendWelcomeEmail::dispatch();
-    \App\Jobs\ProcessPayment::dispatch();
+    \App\Jobs\ProcessPayment::dispatch()->onQueue('payments');
     return view('welcome');
 });
