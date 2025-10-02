@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\EmailController;
+
+// Route::get('/send-emails', [EmailController::class, 'sendEmails']);
 
 /*
 |--------------------------------------------------------------------------
@@ -14,11 +17,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    foreach (range(1, 100) as $i) {
-        echo $i . ' ';
-        \App\Jobs\SendWelcomeEmail::dispatch();
-    }
+    // foreach (range(1, 100) as $i) {
+    //     echo $i . ' ';
+    //     \App\Jobs\SendWelcomeEmail::dispatch();
+    // }
     //
     // \App\Jobs\SendWelcomeEmail::dispatch();
+    \App\Jobs\ProcessPayment::dispatch();
     return view('welcome');
 });
