@@ -34,6 +34,20 @@ Route::get('/', function () {
         // new \App\Jobs\ProcessPayment(),
 
     ];
-    \Illuminate\Support\Facades\Bus::batch($batch)->dispatch();
+    \Illuminate\Support\Facades\Bus::batch($batch)
+    ->allowFailures(true) // allow failures for individual jobs
+    ->then(function (\Illuminate\Bus\Batch $batch) {
+        // All jobs completed successfully...
+        info('All jobs completed successfully...');
+    })
+    ->catch(function (\Illuminate\Bus\Batch $batch, \Throwable $e) {
+        // First batch job failure detected...
+        info('First batch job failure detected...');
+    })
+    ->finally(function (\Illuminate\Bus\Batch $batch) {
+        // The batch has finished executing...
+        info('The batch has finished executing...');
+    })
+    ->dispatch();
     return view('welcome');
 });

@@ -12,8 +12,8 @@ use Illuminate\Queue\SerializesModels;
 
 class SendWelcomeEmail implements ShouldQueue
 {
-    use Batchable,Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-    // public $timeout = 1;
+    use Batchable, Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    public $timeout = 1;
     // public $tries = 1; // Unlimited tries
     // public $backoff = [10, 30, 60]; // in seconds
     // public $backoff = 2; // in seconds
@@ -35,10 +35,14 @@ class SendWelcomeEmail implements ShouldQueue
      */
     public function handle()
     {
+        if ($this->batch()->cancelled()) {
+            return;
+        }
+        sleep(3);
 
-        sleep(3); // Simulate a time-consuming task
+        // Simulate a time-consuming task
         // \Log::info('Welcome email sent!');
-        info('Welcome email sent!');
+        // info('Welcome email sent!');
     }
 
     // public function failed(\Throwable $exception)
