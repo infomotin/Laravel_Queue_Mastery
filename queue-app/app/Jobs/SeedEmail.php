@@ -29,7 +29,7 @@ class SeedEmail implements ShouldQueue
      */
     public function handle()
     {
-        // throw new \Exception('Seed email failed');
+        throw new \Exception('Seed email failed');
         sleep(1);
         // return $this->release();
         info('Seed email sent!');

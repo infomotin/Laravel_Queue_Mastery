@@ -25,12 +25,15 @@ Route::get('/', function () {
     // \App\Jobs\SendWelcomeEmail::dispatch();
     // \App\Jobs\ProcessPayment::dispatch()->onQueue('payments');
     // \App\Jobs\SeedEmail::dispatch();
-    $chain = [
-        new \App\Jobs\SendWelcomeEmail(),
-        new \App\Jobs\SeedEmail(),
-        new \App\Jobs\ProcessPayment(),
+    $batch = [
+        new \App\Jobs\SendWelcomeEmail('email1'),
+        new \App\Jobs\SendWelcomeEmail('email2'),
+        new \App\Jobs\SendWelcomeEmail('email3'),
+
+        // new \App\Jobs\SeedEmail(),
+        // new \App\Jobs\ProcessPayment(),
 
     ];
-    \Illuminate\Support\Facades\Bus::chain($chain)->dispatch();
+    \Illuminate\Support\Facades\Bus::batch($batch)->dispatch();
     return view('welcome');
 });
